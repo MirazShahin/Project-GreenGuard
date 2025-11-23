@@ -115,7 +115,7 @@
                     ApplyFilters();
                 }
             }
-        }\
+        }
         private async void OnChangeLeaderClicked(object sender, EventArgs e)
         {
             if (sender is Button button && button.CommandParameter is ZoneInfo zone)

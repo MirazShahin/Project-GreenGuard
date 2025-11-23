@@ -1,91 +1,80 @@
-﻿namespace GreenGuard.Views
+﻿using GreenGuard.Models;
+using GreenGuard.Services;
+
+namespace GreenGuard.Views
 {
     public partial class UpdateTreePage : ContentPage
     {
-        // Mock tree data (later DB থেকে আসবে)
-        private List<Tree> trees = new List<Tree>
-        {
-            new Tree { Name = "Mango Tree", Description = "Sweet mango fruits", Price = 200, Stock = 50 },
-            new Tree { Name = "Neem Tree", Description = "Medicinal tree", Price = 100, Stock = 30 },
-            new Tree { Name = "Rose Plant", Description = "Red roses", Price = 120, Stock = 40 }
-        };
+        private readonly ApiService _api;
+        private List<Tree> _trees;
+        private Tree _selectedTree;
 
         public UpdateTreePage()
         {
             InitializeComponent();
-            TreePicker.ItemsSource = trees.Select(t => t.Name).ToList();
+            _api = new ApiService();
+            LoadTrees();
+        }
+
+        private async void LoadTrees()
+        {
+            _trees = await _api.GetTrees();
+            TreePicker.ItemsSource = _trees.Select(t => t.Name).ToList();
         }
 
         private void OnTreeSelected(object sender, EventArgs e)
         {
             if (TreePicker.SelectedIndex == -1) return;
 
-            string selectedTreeName = TreePicker.SelectedItem.ToString();
-            var tree = trees.FirstOrDefault(t => t.Name == selectedTreeName);
+            _selectedTree = _trees[TreePicker.SelectedIndex];
 
-            if (tree != null)
-            {
-                TreeNameEntry.Text = tree.Name;
-                TreeDescriptionEditor.Text = tree.Description;
-                TreePriceEntry.Text = tree.Price.ToString();
-                TreeStockEntry.Text = tree.Stock.ToString();
-            }
+            TreeNameEntry.Text = (string)_selectedTree.Name;
+            TreeDescriptionEditor.Text = _selectedTree.Description;
+            TreePriceEntry.Text = _selectedTree.Price.ToString();
+            TreeStockEntry.Text = _selectedTree.Stock.ToString();
         }
 
         private async void OnUpdateTreeClicked(object sender, EventArgs e)
         {
-            if (TreePicker.SelectedIndex == -1)
+            if (_selectedTree == null)
             {
-                await DisplayAlert("Error", "Please select a tree to update.", "OK");
+                await DisplayAlert("Error", "Please select a tree first!", "OK");
                 return;
             }
 
-            string name = TreeNameEntry.Text?.Trim();
-            string description = TreeDescriptionEditor.Text?.Trim();
-            string priceText = TreePriceEntry.Text?.Trim();
-            string stockText = TreeStockEntry.Text?.Trim();
-
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description) ||
-                string.IsNullOrEmpty(priceText) || string.IsNullOrEmpty(stockText))
+            // Validate inputs
+            if (string.IsNullOrWhiteSpace(TreeNameEntry.Text) ||
+                string.IsNullOrWhiteSpace(TreeDescriptionEditor.Text) ||
+                !int.TryParse(TreePriceEntry.Text, out int price) ||
+                !int.TryParse(TreeStockEntry.Text, out int stock))
             {
-                await DisplayAlert("Error", "All fields are required!", "OK");
+                await DisplayAlert("Error", "Please fill all fields correctly!", "OK");
                 return;
             }
 
-            if (!int.TryParse(priceText, out int price) || !int.TryParse(stockText, out int stock))
+            // Update tree object
+            _selectedTree.Name = TreeNameEntry.Text.Trim();
+            _selectedTree.Description = TreeDescriptionEditor.Text.Trim();
+            _selectedTree.Price = price;
+            _selectedTree.Stock = stock;
+
+            bool success = await _api.UpdateTree(_selectedTree);
+
+            if (success)
             {
-                await DisplayAlert("Error", "Price and Stock must be valid numbers!", "OK");
-                return;
+                await DisplayAlert("Success", "Tree updated successfully!", "OK");
+                await Navigation.PopAsync();
             }
-
-            // Update selected tree
-            string selectedTreeName = TreePicker.SelectedItem.ToString();
-            var tree = trees.FirstOrDefault(t => t.Name == selectedTreeName);
-
-            if (tree != null)
+            else
             {
-                tree.Name = name;
-                tree.Description = description;
-                tree.Price = price;
-                tree.Stock = stock;
-
-                await DisplayAlert("Success", $"Tree '{name}' updated successfully!", "OK");
-                await Navigation.PopAsync(); // Back to AdminDashboard
+                await DisplayAlert("Error", "Failed to update tree.", "OK");
             }
         }
+
 
         private async void OnCancelClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
-        }
-
-        // Tree model
-        public class Tree
-        {
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public int Price { get; set; }
-            public int Stock { get; set; }
         }
     }
 }

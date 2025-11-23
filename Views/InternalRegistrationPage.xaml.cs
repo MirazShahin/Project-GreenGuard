@@ -1,29 +1,55 @@
-﻿namespace GreenGuard.Views
+﻿using GreenGuard.Models;
+using GreenGuard.Services;
+
+namespace GreenGuard.Views
 {
     public partial class InternalRegistrationPage : ContentPage
     {
+        private readonly ApiService _api;
+
         public InternalRegistrationPage()
         {
             InitializeComponent();
+            _api = new ApiService();
         }
 
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
-            string name = NameEntry.Text?.Trim();
-            string email = EmailEntry.Text?.Trim();
-            string password = PasswordEntry.Text?.Trim();
-            string role = RolePicker.SelectedItem?.ToString();
-            string zone = ZoneEntry.Text?.Trim();
+            string? name = NameEntry.Text?.Trim();
+            string? email = EmailEntry.Text?.Trim();
+            string? password = PasswordEntry.Text?.Trim();
+            string? role = RolePicker.SelectedItem?.ToString();
+            string? zone = ZoneEntry.Text?.Trim();
 
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) ||
-                string.IsNullOrEmpty(password) || string.IsNullOrEmpty(role))
+            if (string.IsNullOrWhiteSpace(name) ||
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(role))
             {
-                await DisplayAlert("Error", "Please fill all required fields.", "OK");
+                await DisplayAlert("Error", "Please fill all fields.", "OK");
                 return;
             }
 
-            await DisplayAlert("Success", $"{role} registered successfully!", "OK");
-            await Navigation.PopAsync(); // back to login
+            InternalUser user = new InternalUser
+            {
+                FullName = name,
+                Email = email,
+                Password = password,
+                Role = role,
+                Zone = zone
+            };
+
+            bool ok = await _api.RegisterInternalUser(user);
+
+            if (ok)
+            {
+                await DisplayAlert("Success", "Registration successful!", "OK");
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                await DisplayAlert("Error", "Cannot connect to server.", "OK");
+            }
         }
 
         private async void OnBackClicked(object sender, EventArgs e)
