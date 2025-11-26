@@ -25,12 +25,6 @@
         {
             await Navigation.PushAsync(new NGOMessagesPage());
         }
-
-        private async void OnRequestVolunteersClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new NGOVolunteerPage());
-        }
-
         private async void OnLogoutClicked(object sender, EventArgs e)
         {
             bool confirm = await DisplayAlert("Logout", "Are you sure you want to logout?", "Yes", "No");

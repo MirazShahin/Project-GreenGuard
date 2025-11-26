@@ -8,16 +8,15 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">
 
-            <Label Text="👤 Personal Dashboard"
+            <Label Text="Personal Dashboard"
                    FontSize="26"
                    TextColor="LightGreen"
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
 
-            <!-- Add My Zone -->
             <Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="🗺️ Add My Zone"
+                    <Label Text="Add My Zone"
                            TextColor="White"
                            FontSize="18"
                            FontAttributes="Bold" />
@@ -32,28 +31,9 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Browse Projects -->
             <Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="🌱 Explore Plantation Projects"
-                           TextColor="White"
-                           FontSize="18"
-                           FontAttributes="Bold" />
-                    <Label Text="Discover ongoing tree plantation campaigns to support."
-                           TextColor="Gray" FontSize="14" />
-                    <Button Text="Browse Projects"
-                            BackgroundColor="Teal"
-                            TextColor="White"
-                            CornerRadius="25"
-                            HeightRequest="50"
-                            Clicked="OnBrowseClicked" />
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- Purchase Trees -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="🪴 Purchase Trees"
+                    <Label Text="Purchase Trees"
                            TextColor="White"
                            FontSize="18"
                            FontAttributes="Bold" />
@@ -69,10 +49,9 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- My Sponsorships -->
             <Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="💰 My Contributions"
+                    <Label Text="My Contributions"
                            TextColor="White"
                            FontSize="18"
                            FontAttributes="Bold" />
@@ -87,25 +66,6 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Profile -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="👤 Profile and Settings"
-                           TextColor="White"
-                           FontSize="18"
-                           FontAttributes="Bold" />
-                    <Label Text="Update your personal details or contact preferences."
-                           TextColor="Gray" FontSize="14" />
-                    <Button Text="Edit Profile"
-                            BackgroundColor="DodgerBlue"
-                            TextColor="White"
-                            CornerRadius="25"
-                            HeightRequest="50"
-                            Clicked="OnProfileClicked" />
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- Logout -->
             <Button Text="Logout"
                     BackgroundColor="DarkRed"
                     TextColor="White"

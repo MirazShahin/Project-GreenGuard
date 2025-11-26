@@ -1,58 +1,63 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GreenGuard.Views.GuestDashboard"
-             BackgroundColor="#1E1E1E"
-             Title="Guest Dashboard">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GreenGuard.Views.GuestDashboard"
+    BackgroundColor="#1E1E1E"
+    Title="Guest Dashboard">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
+
             <Label Text="Available Trees"
                    FontSize="26"
                    TextColor="White"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center" />
+
             <CollectionView x:Name="TreeCollectionView" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BorderColor="Gray"
+                        <Frame BackgroundColor="#2A2A2A"
                                CornerRadius="12"
-                               Padding="12"
-                               Margin="5"
-                               BackgroundColor="#2A2A2A">
-                            <VerticalStackLayout Spacing="6">
+                               Padding="15"
+                               Margin="0,10">
+
+                            <VerticalStackLayout Spacing="8">
+
                                 <Label Text="{Binding Name}"
                                        FontSize="18"
-                                       FontAttributes="Bold"
-                                       TextColor="LightGreen"/>
+                                       TextColor="LightGreen"
+                                       FontAttributes="Bold" />
+
                                 <Label Text="{Binding Description}"
                                        FontSize="14"
-                                       TextColor="White"/>
-                                <Label Text="{Binding Price, StringFormat='Price: {0} BDT'}"
-                                       FontSize="14"
-                                       TextColor="LightGray"/>
-                                <HorizontalStackLayout>
-                                    <Label Text="Quantity:"
-                                           TextColor="White"
-                                           VerticalOptions="Center"/>
-                                    <Entry Placeholder="1"
-                                           Keyboard="Numeric"
-                                           WidthRequest="60"
-                                           TextColor="Black"
-                                           BackgroundColor="White"
-                                           Text="{Binding Quantity, Mode=TwoWay}"/>
-                                </HorizontalStackLayout>
+                                       TextColor="LightGray"
+                                       LineBreakMode="WordWrap" />
+
+                                <Label Text="Price: ৳{Binding Price}"
+                                       FontSize="16"
+                                       TextColor="Orange" />
+
+                                <Label Text="Stock: {Binding Stock}"
+                                       FontSize="16"
+                                       TextColor="LightGreen" />
+
                                 <Button Text="Buy Tree"
                                         BackgroundColor="#FF3366"
                                         TextColor="White"
                                         CornerRadius="20"
-                                        HeightRequest="40"
+                                        HeightRequest="45"
                                         CommandParameter="{Binding .}"
                                         Clicked="OnBuyTreeClicked"/>
+
                             </VerticalStackLayout>
+
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
             <Button Text="Back"
                     BackgroundColor="DarkRed"
                     TextColor="White"
@@ -60,6 +65,8 @@
                     HeightRequest="50"
                     Margin="0,20,0,0"
                     Clicked="OnLogoutClicked"/>
+
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

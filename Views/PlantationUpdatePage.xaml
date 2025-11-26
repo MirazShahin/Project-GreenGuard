@@ -1,74 +1,96 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GreenGuard.Views.PlantationUpdatePage"
-             BackgroundColor="#1E1E1E"
-             Title="Plantation Update">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GreenGuard.Views.PlantationUpdatePage"
+    BackgroundColor="#1E1E1E"
+    Title="Plantation Update">
 
-	<ScrollView>
-		<VerticalStackLayout Padding="20" Spacing="15">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-			<Label Text="🌱 Plantation Update"
+            <Label Text="🌱 Plantation Update"
                    FontSize="26"
                    TextColor="LightGreen"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center" />
 
-			<!-- Zone -->
-			<Entry x:Name="ZoneEntry"
-                   Placeholder="Enter Zone / Area"
-                   PlaceholderColor="Gray"
-                   TextColor="White"
-                   BackgroundColor="#2A2A2A"/>
+            <!-- Zone Entry -->
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="0">
+                <Entry x:Name="ZoneEntry"
+                       Placeholder="Enter Zone / Area"
+                       PlaceholderColor="#AAA"
+                       TextColor="White"
+                       BackgroundColor="Transparent"
+                       HeightRequest="45"/>
+            </Frame>
 
-			<!-- Tree Species -->
-			<Entry x:Name="SpeciesEntry"
-                   Placeholder="Enter Tree Species"
-                   PlaceholderColor="Gray"
-                   TextColor="White"
-                   BackgroundColor="#2A2A2A"/>
+            <!-- Tree Species -->
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="0">
+                <Entry x:Name="SpeciesEntry"
+                       Placeholder="Enter Tree Species"
+                       PlaceholderColor="#AAA"
+                       TextColor="White"
+                       BackgroundColor="Transparent"
+                       HeightRequest="45"/>
+            </Frame>
 
-			<!-- Number of Trees -->
-			<Entry x:Name="TreeCountEntry"
-                   Placeholder="Enter Number of Trees Planted"
-                   Keyboard="Numeric"
-                   PlaceholderColor="Gray"
-                   TextColor="White"
-                   BackgroundColor="#2A2A2A"/>
+            <!-- Number of Trees -->
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="0">
+                <Entry x:Name="NumberEntry"
+                       Placeholder="Enter Number of Trees Planted"
+                       Keyboard="Numeric"
+                       PlaceholderColor="#AAA"
+                       TextColor="White"
+                       BackgroundColor="Transparent"
+                       HeightRequest="45"/>
+            </Frame>
 
-			<!-- Date -->
-			<DatePicker x:Name="PlantationDatePicker"
+            <!-- Plantation Date -->
+            <DatePicker x:Name="DatePickerControl"
+                        BackgroundColor="#333"
                         TextColor="White"
-                        BackgroundColor="#2A2A2A"
-                        Format="dd MMM yyyy"/>
+                        Margin="0,5,0,0" />
 
-			<!-- Upload Proof -->
-			<Button Text="📷 Upload Proof (Image/Video)"
-                    BackgroundColor="DodgerBlue"
+            <!-- Upload Proof -->
+            <Button Text="📁 Upload Proof (Image/Video)"
+                    BackgroundColor="#2196F3"
                     TextColor="White"
                     CornerRadius="25"
                     HeightRequest="50"
-                    Clicked="OnUploadProofClicked"/>
+                    Clicked="OnUploadProofClicked" />
 
-			<Image x:Name="ProofImage"
+            <!-- Image Preview -->
+            <Image x:Name="ProofImage"
                    IsVisible="False"
                    HeightRequest="200"
-                   Aspect="AspectFit"/>
+                   Aspect="AspectFill"
+                   Margin="0,10,0,0"
+                   BackgroundColor="#444" />
 
-			<!-- Buttons -->
-			<Button Text="✅ Submit Update"
-                    BackgroundColor="Teal"
+            <!-- Submit Button -->
+            <Button Text="✔ Submit Update"
+                    BackgroundColor="#00897B"
                     TextColor="White"
                     CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnSubmitClicked"/>
+                    HeightRequest="55"
+                    Clicked="OnSubmitClicked" />
 
-			<Button Text="Cancel"
-                    BackgroundColor="Gray"
+            <!-- Cancel Button -->
+            <Button Text="Cancel"
+                    BackgroundColor="#777"
                     TextColor="White"
                     CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnCancelClicked"/>
+                    HeightRequest="55"
+                    Clicked="OnCancelClicked" />
 
-		</VerticalStackLayout>
-	</ScrollView>
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

@@ -15,7 +15,7 @@
 
             <!-- Search Bar -->
             <SearchBar x:Name="LeaderSearchBar"
-                       Placeholder="Search leaders by name or ID..."
+                       Placeholder="Search leaders by name, email or ID..."
                        TextChanged="OnSearchTextChanged"
                        TextColor="White"
                        PlaceholderColor="Gray"
@@ -25,6 +25,7 @@
             <CollectionView x:Name="GroupedLeaderCollectionView"
                             IsGrouped="True"
                             SelectionMode="None">
+
                 <!-- Group Header -->
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate>
@@ -47,19 +48,29 @@
                                CornerRadius="10"
                                Padding="10"
                                Margin="5">
+
                             <VerticalStackLayout>
-                                <Label Text="{Binding Name}"
+
+                                <!-- 🔹 FIXED: Changed Name → FullName -->
+                                <Label Text="{Binding FullName}"
                                        FontSize="18"
                                        TextColor="White"
                                        FontAttributes="Bold"/>
-                                <Label Text="{Binding LeaderId}"
+
+                                <Label Text="{Binding LeaderId, StringFormat='Leader ID: {0}'}"
                                        FontSize="14"
                                        TextColor="Orange"/>
-                                <Label Text="{Binding Zone}"
+
+                                <Label Text="{Binding Email}"
+                                       FontSize="14"
+                                       TextColor="#ccc"/>
+
+                                <Label Text="{Binding Zone, StringFormat='Zone: {0}'}"
                                        FontSize="14"
                                        TextColor="LightBlue"/>
 
                                 <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+
                                     <Button Text="Edit"
                                             BackgroundColor="Teal"
                                             TextColor="White"
@@ -67,6 +78,7 @@
                                             HeightRequest="35"
                                             CommandParameter="{Binding .}"
                                             Clicked="OnEditClicked"/>
+
                                     <Button Text="Remove"
                                             BackgroundColor="Red"
                                             TextColor="White"
@@ -74,8 +86,11 @@
                                             HeightRequest="35"
                                             CommandParameter="{Binding .}"
                                             Clicked="OnRemoveClicked"/>
+
                                 </HorizontalStackLayout>
+
                             </VerticalStackLayout>
+
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -89,13 +104,14 @@
                     HeightRequest="50"
                     Clicked="OnAddLeaderClicked"/>
 
-            <!-- Back -->
+            <!-- Back Button -->
             <Button Text="Back"
                     BackgroundColor="Gray"
                     TextColor="White"
                     CornerRadius="25"
                     HeightRequest="50"
                     Clicked="OnBackClicked"/>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

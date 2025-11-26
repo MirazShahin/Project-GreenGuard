@@ -1,42 +1,56 @@
-﻿namespace GreenGuard.Views
+﻿using GreenGuard.Models;
+using GreenGuard.Services;
+
+namespace GreenGuard.Views
 {
     public partial class BuyTreePage : ContentPage
     {
-        private Tree _tree;
+        private readonly ApiService _api;
+        private readonly Tree _tree;
+        private readonly int _quantity;
+        private readonly string _userId;
 
-        public class Tree
-        {
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public int Price { get; set; }
-            public int Quantity { get; set; }
-        }
-
-        public BuyTreePage(Tree selectedTree)
+        public BuyTreePage(Tree tree, int quantity, string userId)
         {
             InitializeComponent();
-            _tree = selectedTree;
+            _api = new ApiService();
 
-            // Populate UI
-            TreeNameLabel.Text = selectedTree.Name;
-            TreeDescriptionLabel.Text = selectedTree.Description;
-            TreePriceLabel.Text = $"Price: {selectedTree.Price} BDT";
-            TreeQuantityLabel.Text = $"Quantity: {selectedTree.Quantity}";
-            TotalPriceLabel.Text = $"Total: {selectedTree.Price * selectedTree.Quantity} BDT";
+            _tree = tree;
+            _quantity = quantity;
+            _userId = userId;
+
+            LoadSummary();
+        }
+
+        private void LoadSummary()
+        {
+            TreeNameLabel.Text = $"Tree: {_tree.Name}";
+            TreeDescriptionLabel.Text = _tree.Description;
+            TreePriceLabel.Text = $"Price per Tree: ৳{_tree.Price}";
+            TreeQuantityLabel.Text = $"Quantity: {_quantity}";
+
+            int total = _tree.Price * _quantity;
+            TotalPriceLabel.Text = $"Total Price: ৳{total}";
         }
 
         private async void OnConfirmClicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Order Confirmed",
-                $"You purchased {_tree.Quantity} {_tree.Name}(s)\nTotal: {_tree.Price * _tree.Quantity} BDT",
-                "OK");
+            bool ok = await _api.PurchaseTree(_tree.Id, _userId, _quantity);
 
-            await Navigation.PopToRootAsync(); // back to LoginPage
+            if (ok)
+            {
+                await DisplayAlert("Success", "🌱 Tree purchase successful!", "OK");
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                await DisplayAlert("Error", "Not enough stock or purchase failed.", "OK");
+            }
         }
 
         private async void OnBackClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync(); // back to GuestDashboard
+            await Navigation.PopAsync();
         }
     }
 }

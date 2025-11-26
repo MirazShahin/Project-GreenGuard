@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Visual Studio and user-specific files
 .vs/
 *.user
@@ -87,3 +88,6 @@ Desktop.ini
 *.bak
 *.orig
 *.swp
+=======
+.vs
+>>>>>>> 1825276766946adb2703ba98e0d628b645b26805

@@ -1,45 +1,60 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GreenGuard.Views.BuyTreePage"
-             BackgroundColor="#1E1E1E"
-             Title="Buy Tree">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GreenGuard.Views.BuyTreePage"
+    BackgroundColor="#1E1E1E"
+    Title="Buy Tree">
 
-	<ScrollView>
-		<VerticalStackLayout Padding="20" Spacing="15">
-			<Label Text="Order Summary"
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="🛒 Order Summary"
                    FontSize="26"
-                   TextColor="White"
+                   TextColor="LightGreen"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"/>
-			<Label x:Name="TreeNameLabel"
+
+            <Label x:Name="TreeNameLabel"
                    FontSize="20"
-                   TextColor="LightGreen"
+                   TextColor="White"
                    FontAttributes="Bold"/>
-			<Label x:Name="TreeDescriptionLabel"
+
+            <Label x:Name="TreeDescriptionLabel"
                    FontSize="14"
-                   TextColor="White"/>
-			<Label x:Name="TreePriceLabel"
+                   TextColor="LightGray"
+                   LineBreakMode="WordWrap"/>
+
+            <Label x:Name="TreePriceLabel"
                    FontSize="16"
-                   TextColor="LightGray"/>
-			<Label x:Name="TreeQuantityLabel"
+                   TextColor="#FFEEAA"/>
+
+            <Label x:Name="TreeQuantityLabel"
                    FontSize="16"
                    TextColor="White"/>
-			<Label x:Name="TotalPriceLabel"
-                   FontSize="18"
+
+            <Label x:Name="TotalPriceLabel"
+                   FontSize="20"
                    TextColor="#FF3366"
                    FontAttributes="Bold"/>
-			<Button Text="Confirm Purchase"
-                    BackgroundColor="#FF3366"
+
+            <!-- Confirm Button -->
+            <Button Text="✔ Confirm Purchase"
+                    BackgroundColor="#28A745"
                     TextColor="White"
                     CornerRadius="25"
-                    HeightRequest="50"
+                    HeightRequest="55"
                     Clicked="OnConfirmClicked"/>
-			<Button Text="Back"
+
+            <!-- Back Button -->
+            <Button Text="Back"
                     BackgroundColor="Gray"
                     TextColor="White"
                     CornerRadius="25"
-                    HeightRequest="50"
+                    HeightRequest="55"
                     Clicked="OnBackClicked"/>
-		</VerticalStackLayout>
-	</ScrollView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

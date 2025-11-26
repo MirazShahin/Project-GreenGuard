@@ -4,99 +4,126 @@
              BackgroundColor="#1E1E1E"
              Title="Manage Volunteers">
 
-	<ScrollView>
-		<VerticalStackLayout Padding="20" Spacing="15">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-			<Label Text="🙋 Manage Volunteers"
+            <!-- Page Title -->
+            <Label Text="🙋 Manage Volunteers"
                    FontSize="26"
                    TextColor="LightGreen"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"/>
 
-			<!-- Search Bar -->
-			<SearchBar x:Name="VolunteerSearchBar"
-                       Placeholder="Search volunteers by name or ID..."
+            <!-- Search Bar -->
+            <SearchBar x:Name="VolunteerSearchBar"
+                       Placeholder="Search volunteers by name, email or ID..."
                        TextChanged="OnSearchTextChanged"
                        TextColor="White"
                        PlaceholderColor="Gray"
-                       BackgroundColor="#2A2A2A"/>
+                       BackgroundColor="#2A2A2A"
+                       Margin="0,5"/>
 
-			<!-- Grouped Volunteers -->
-			<CollectionView x:Name="GroupedVolunteerCollectionView"
+            <!-- Grouped Volunteer List -->
+            <CollectionView x:Name="GroupedVolunteerCollectionView"
                             IsGrouped="True"
-                            SelectionMode="None">
+                            SelectionMode="None"
+                            Margin="0,10">
 
-				<!-- Group Header -->
-				<CollectionView.GroupHeaderTemplate>
-					<DataTemplate>
-						<Frame BackgroundColor="#333"
+                <!-- Group Header -->
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#333"
                                Padding="10"
                                CornerRadius="5"
                                Margin="0,5,0,0">
-							<Label Text="{Binding Key}"
+
+                            <!-- Zone name -->
+                            <Label Text="{Binding Key}"
                                    FontSize="18"
                                    TextColor="LightGreen"
                                    FontAttributes="Bold"/>
-						</Frame>
-					</DataTemplate>
-				</CollectionView.GroupHeaderTemplate>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
 
-				<!-- Volunteer Items -->
-				<CollectionView.ItemTemplate>
-					<DataTemplate>
-						<Frame BackgroundColor="#2A2A2A"
+                <!-- Volunteer Item -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#2A2A2A"
                                CornerRadius="10"
                                Padding="10"
                                Margin="5">
-							<VerticalStackLayout>
-								<Label Text="{Binding Name}"
+
+                            <VerticalStackLayout>
+
+                                <!-- Volunteer Full Name -->
+                                <Label Text="{Binding FullName}"
                                        FontSize="18"
                                        TextColor="White"
                                        FontAttributes="Bold"/>
-								<Label Text="{Binding VolunteerId}"
+
+                                <!-- Volunteer ID -->
+                                <Label Text="{Binding VolunteerId}"
                                        FontSize="14"
                                        TextColor="Orange"/>
-								<Label Text="{Binding Zone}"
+
+                                <!-- Volunteer Email -->
+                                <Label Text="{Binding Email}"
+                                       FontSize="14"
+                                       TextColor="#ccc"/>
+
+                                <!-- Volunteer Zone -->
+                                <Label Text="{Binding Zone}"
                                        FontSize="14"
                                        TextColor="LightBlue"/>
 
-								<HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
-									<Button Text="Edit"
+                                <!-- Buttons -->
+                                <HorizontalStackLayout Spacing="10"
+                                                       Margin="0,10,0,0">
+
+                                    <Button Text="Edit"
                                             BackgroundColor="Teal"
                                             TextColor="White"
                                             CornerRadius="20"
                                             HeightRequest="35"
                                             CommandParameter="{Binding .}"
                                             Clicked="OnEditClicked"/>
-									<Button Text="Remove"
+
+                                    <Button Text="Remove"
                                             BackgroundColor="Red"
                                             TextColor="White"
                                             CornerRadius="20"
                                             HeightRequest="35"
                                             CommandParameter="{Binding .}"
                                             Clicked="OnRemoveClicked"/>
-								</HorizontalStackLayout>
-							</VerticalStackLayout>
-						</Frame>
-					</DataTemplate>
-				</CollectionView.ItemTemplate>
-			</CollectionView>
 
-			<!-- Add Volunteer -->
-			<Button Text="➕ Add Volunteer"
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+            <!-- Add Volunteer -->
+            <Button Text="➕ Add Volunteer"
                     BackgroundColor="MediumPurple"
                     TextColor="White"
                     CornerRadius="25"
                     HeightRequest="50"
                     Clicked="OnAddVolunteerClicked"/>
 
-			<!-- Back -->
-			<Button Text="Back"
+            <!-- Back -->
+            <Button Text="Back"
                     BackgroundColor="Gray"
                     TextColor="White"
                     CornerRadius="25"
                     HeightRequest="50"
                     Clicked="OnBackClicked"/>
-		</VerticalStackLayout>
-	</ScrollView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

@@ -8,162 +8,132 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
-            <!-- Header -->
             <Label Text="Admin Dashboard"
                    FontSize="28"
                    TextColor="LightGreen"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center" />
 
-            <!-- Stats Section -->
-            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
-                <Frame BackgroundColor="#2A2A2A" CornerRadius="15" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                        <Label Text="🌳" FontSize="40" HorizontalOptions="Center"/>
+            <HorizontalStackLayout Spacing="15"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Start">
+
+                <Frame BackgroundColor="#2A2A2A"
+                       CornerRadius="15"
+                       Padding="20"
+                       WidthRequest="150">
+                    <VerticalStackLayout Spacing="5"
+                                         HorizontalOptions="Center">
+                        <Label Text="🌳" FontSize="40" />
                         <Label x:Name="TotalSoldLabel"
                                Text="0"
                                FontSize="26"
                                TextColor="LightGreen"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                               FontAttributes="Bold" />
                         <Label Text="Trees Sold"
                                FontSize="14"
-                               TextColor="White"
-                               HorizontalOptions="Center"/>
+                               TextColor="White" />
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame BackgroundColor="#2A2A2A" CornerRadius="15" Padding="20" WidthRequest="150">
-                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                        <Label Text="🏆" FontSize="40" HorizontalOptions="Center"/>
+                <!-- Top Tree -->
+                <Frame BackgroundColor="#2A2A2A"
+                       CornerRadius="15"
+                       Padding="20"
+                       WidthRequest="150">
+                    <VerticalStackLayout Spacing="5"
+                                         HorizontalOptions="Center">
+                        <Label Text="🏆" FontSize="40" />
                         <Label x:Name="TopTreeLabel"
                                Text="None"
                                FontSize="18"
                                TextColor="Orange"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                               FontAttributes="Bold" />
                         <Label Text="Top Tree"
                                FontSize="14"
-                               TextColor="White"
-                               HorizontalOptions="Center"/>
+                               TextColor="White" />
                     </VerticalStackLayout>
                 </Frame>
+
             </HorizontalStackLayout>
 
             <!-- Tree Management Section -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="10">
                 <VerticalStackLayout Spacing="10">
                     <Button Text="Add New Tree"
                             BackgroundColor="Green"
                             TextColor="White"
                             CornerRadius="25"
                             HeightRequest="50"
-                            Clicked="OnAddTreeClicked"/>
-                    <Button Text="Update Tree"
-                            BackgroundColor="DarkGreen"
+                            Clicked="OnAddTreeClicked" />
+
+                    <!-- 🔁 Replaced Update button with Delete button -->
+                    <Button Text="Delete Tree"
+                            BackgroundColor="DarkRed"
                             TextColor="White"
                             CornerRadius="25"
                             HeightRequest="50"
-                            Clicked="OnUpdateTreeClicked"/>
-                    <Button Text="Manage Tree Inventory"
-                            BackgroundColor="Teal"
-                            TextColor="White"
-                            CornerRadius="25"
-                            HeightRequest="50"
-                            Clicked="OnInventoryClicked"/>
+                            Clicked="OnDeleteTreeClicked" />
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Permission Requests -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
-                <Button Text="Permission Requests"
-                        BackgroundColor="DarkOrange"
-                        TextColor="White"
-                        CornerRadius="25"
-                        HeightRequest="50"
-                        Clicked="OnPermissionRequestsClicked"/>
-            </Frame>
-            <!-- NGO Requests Section -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
+            <!-- NGO Requests -->
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="10">
                 <Button Text="NGO Requests"
                         BackgroundColor="MediumSeaGreen"
                         TextColor="White"
                         CornerRadius="25"
                         HeightRequest="50"
-                        Clicked="OnNGORequestsClicked"/>
+                        Clicked="OnNGORequestsClicked" />
             </Frame>
 
-            <!-- 🌱 Project Requests (NEW) -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
-                <Button Text="🌱 Project Requests"
-                        BackgroundColor="ForestGreen"
-                        TextColor="White"
-                        CornerRadius="25"
-                        HeightRequest="50"
-                        Clicked="OnProjectRequestsClicked"/>
-            </Frame>
-       
             <!-- User Management -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="10">
                 <VerticalStackLayout Spacing="10">
                     <Button Text="View Leaders"
                             BackgroundColor="DodgerBlue"
                             TextColor="White"
                             CornerRadius="25"
                             HeightRequest="50"
-                            Clicked="OnViewLeadersClicked"/>
+                            Clicked="OnViewLeadersClicked" />
+
                     <Button Text="View Volunteers"
                             BackgroundColor="MediumPurple"
                             TextColor="White"
                             CornerRadius="25"
                             HeightRequest="50"
-                            Clicked="OnViewVolunteersClicked"/>
+                            Clicked="OnViewVolunteersClicked" />
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Zone Management -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="10">
                 <Button Text="Zone Management"
                         BackgroundColor="Purple"
                         TextColor="White"
                         CornerRadius="25"
                         HeightRequest="50"
-                        Clicked="OnZoneWiseClicked"/>
+                        Clicked="OnZoneWiseClicked" />
             </Frame>
-
-            <!-- Reports -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
-                <VerticalStackLayout Spacing="10">
-                    <Button Text="Sales Report"
-                            BackgroundColor="DarkOrange"
-                            TextColor="White"
-                            CornerRadius="25"
-                            HeightRequest="50"
-                            Clicked="OnSalesReportClicked"/>
-                    <Button Text="Tree Type Analysis"
-                            BackgroundColor="DarkCyan"
-                            TextColor="White"
-                            CornerRadius="25"
-                            HeightRequest="50"
-                            Clicked="OnTreeAnalysisClicked"/>
-                </VerticalStackLayout>
-            </Frame>
-
             <!-- Messages -->
-            <Frame BackgroundColor="#2A2A2A" CornerRadius="10" Padding="10">
+            <Frame BackgroundColor="#2A2A2A"
+                   CornerRadius="10"
+                   Padding="10">
                 <Button Text="📩 Messages"
                         BackgroundColor="Crimson"
                         TextColor="White"
                         CornerRadius="25"
                         HeightRequest="50"
-                        Clicked="OnMessagesClicked"/>
+                        Clicked="OnMessagesClicked" />
             </Frame>
-            <Button Text="NGO Volunteer Requests"
-                    BackgroundColor="MediumPurple"
-                    TextColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnNGORequestsClicked"/>
 
             <!-- Logout -->
             <Button Text="Logout"
@@ -171,7 +141,7 @@
                     TextColor="White"
                     CornerRadius="25"
                     HeightRequest="50"
-                    Clicked="OnLogoutClicked"/>
+                    Clicked="OnLogoutClicked" />
 
         </VerticalStackLayout>
     </ScrollView>

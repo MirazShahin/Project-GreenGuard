@@ -1,46 +1,54 @@
-﻿namespace GreenGuard.Views
+﻿using GreenGuard.Models;
+using GreenGuard.Services;
+
+namespace GreenGuard.Views
 {
     public partial class ValidateUpdatesPage : ContentPage
     {
+        private readonly ApiService _api;
         private List<VolunteerUpdate> updates;
 
         public ValidateUpdatesPage()
         {
             InitializeComponent();
+            _api = new ApiService();
+        }
 
-            // Dummy Data (later DB থেকে আসবে)
-            updates = new List<VolunteerUpdate>
-            {
-                new VolunteerUpdate { VolunteerName="Alamin", Zone="Zone A", UpdateText="Planted 5 Mango Trees" },
-                new VolunteerUpdate { VolunteerName="Sadia", Zone="Zone B", UpdateText="Watered 10 Neem Trees" },
-                new VolunteerUpdate { VolunteerName="Rakib", Zone="Zone C", UpdateText="Fertilized 3 Coconut Trees" },
-                new VolunteerUpdate { VolunteerName="Mitu", Zone="Zone A", UpdateText="Planted 7 Rose Plants" }
-            };
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadUpdates();
+        }
 
+        private async Task LoadUpdates()
+        {
+            updates = await _api.GetPendingUpdates();
             UpdatesCollectionView.ItemsSource = updates;
         }
 
         private async void OnApproveClicked(object sender, EventArgs e)
         {
-            if (sender is Button button && button.CommandParameter is VolunteerUpdate update)
+            if (sender is Button btn && btn.CommandParameter is VolunteerUpdate update)
             {
-                updates.Remove(update);
-                UpdatesCollectionView.ItemsSource = null;
-                UpdatesCollectionView.ItemsSource = updates;
-
-                await DisplayAlert("Approved", $"{update.VolunteerName}'s update approved ✅", "OK");
+                bool ok = await _api.ApproveUpdate(update.Id);
+                if (ok)
+                {
+                    await LoadUpdates();
+                    await DisplayAlert("Approved", $"{update.VolunteerName}'s update approved!", "OK");
+                }
             }
         }
 
         private async void OnRejectClicked(object sender, EventArgs e)
         {
-            if (sender is Button button && button.CommandParameter is VolunteerUpdate update)
+            if (sender is Button btn && btn.CommandParameter is VolunteerUpdate update)
             {
-                updates.Remove(update);
-                UpdatesCollectionView.ItemsSource = null;
-                UpdatesCollectionView.ItemsSource = updates;
-
-                await DisplayAlert("Rejected", $"{update.VolunteerName}'s update rejected ❌", "OK");
+                bool ok = await _api.RejectUpdate(update.Id);
+                if (ok)
+                {
+                    await LoadUpdates();
+                    await DisplayAlert("Rejected", $"{update.VolunteerName}'s update rejected!", "OK");
+                }
             }
         }
 
@@ -48,13 +56,5 @@
         {
             await Navigation.PopAsync();
         }
-    }
-
-    // Model
-    public class VolunteerUpdate
-    {
-        public string VolunteerName { get; set; }
-        public string Zone { get; set; }
-        public string UpdateText { get; set; }
     }
 }

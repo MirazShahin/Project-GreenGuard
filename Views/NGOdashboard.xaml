@@ -15,7 +15,6 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
 
-			<!-- Create Plantation Request -->
 			<Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
 				<VerticalStackLayout Spacing="8">
 					<Label Text="🌱 Create Plantation Request"
@@ -33,7 +32,6 @@
 				</VerticalStackLayout>
 			</Frame>
 
-			<!-- Track Requests -->
 			<Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
 				<VerticalStackLayout Spacing="8">
 					<Label Text="📋 Track Requests"
@@ -51,7 +49,6 @@
 				</VerticalStackLayout>
 			</Frame>
 
-			<!-- Purchase Trees -->
 			<Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
 				<VerticalStackLayout Spacing="8">
 					<Label Text="🪴 Purchase Trees"
@@ -69,32 +66,23 @@
 				</VerticalStackLayout>
 			</Frame>
 
-			<!-- Contact Admin -->
-			<Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
-				<VerticalStackLayout Spacing="8">
-					<Label Text="📨 Messages with Admin"
+            <Frame BackgroundColor="#2A2A2A" CornerRadius="14" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="📨 Messages with Admin"
 						   TextColor="White"
 						   FontSize="18"
 						   FontAttributes="Bold" />
-					<Label Text="Send or receive updates from Admin."
+                    <Label Text="Send or receive updates from Admin."
 						   TextColor="Gray" FontSize="14" />
-					<Button Text="Open Messages"
+                    <Button Text="Open Messages"
 							BackgroundColor="Crimson"
 							TextColor="White"
 							CornerRadius="25"
 							HeightRequest="50"
 							Clicked="OnMessagesClicked" />
-				</VerticalStackLayout>
-			</Frame>
-
-            <Button Text="Request Volunteers"
-                    BackgroundColor="MediumPurple"
-                    TextColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnRequestVolunteersClicked" />
-			<!-- Logout -->
-			<Button Text="Logout"
+                </VerticalStackLayout>
+            </Frame>
+            <Button Text="Logout"
                     BackgroundColor="DarkRed"
                     TextColor="White"
                     CornerRadius="25"

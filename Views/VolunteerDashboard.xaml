@@ -14,7 +14,6 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center"/>
 
-            <!-- Plantation Update -->
             <Button Text="🌱 Plantation Update"
                     BackgroundColor="Teal"
                     TextColor="White"
@@ -22,31 +21,7 @@
                     HeightRequest="50"
                     Clicked="OnPlantationUpdateClicked"/>
 
-            <!-- Tree Request -->
-            <Button Text="📩 Request Trees"
-                    BackgroundColor="DodgerBlue"
-                    TextColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnTreeRequestClicked"/>
 
-            <!-- Tree Requirement Update -->
-            <Button Text="📌 Update Tree Requirement"
-                    BackgroundColor="Purple"
-                    TextColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnRequirementUpdateClicked"/>
-
-            <!-- Volunteer History -->
-            <Button Text="📜 My History"
-                    BackgroundColor="DarkOrange"
-                    TextColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnHistoryClicked"/>
-
-            <!-- Message Leader -->
             <Button Text="📩 Message Leader"
                     BackgroundColor="MediumPurple"
                     TextColor="White"
@@ -54,7 +29,6 @@
                     HeightRequest="50"
                     Clicked="OnMessageClicked"/>
 
-            <!-- Logout -->
             <Button Text="Logout"
                     BackgroundColor="DarkRed"
                     TextColor="White"

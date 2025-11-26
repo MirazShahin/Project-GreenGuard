@@ -7,14 +7,12 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
-            <!-- Header -->
             <Label Text="👨‍🌾 Leader Dashboard"
                    FontSize="26"
                    TextColor="LightGreen"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"/>
 
-            <!-- Validate Volunteer Updates -->
             <Button Text="✅ Validate Volunteer Updates"
                     BackgroundColor="Teal"
                     TextColor="White"
@@ -22,15 +20,6 @@
                     HeightRequest="50"
                     Clicked="OnValidateClicked"/>
 
-            <!-- Reports -->
-            <Button Text="📊 Generate Reports"
-                    BackgroundColor="Orange"
-                    TextColor="White"
-                    CornerRadius="25"
-                    HeightRequest="50"
-                    Clicked="OnReportClicked"/>
-
-            <!-- Volunteer Performance -->
             <Button Text="🏆 Volunteer Performance"
                     BackgroundColor="RoyalBlue"
                     TextColor="White"
@@ -38,7 +27,6 @@
                     HeightRequest="50"
                     Clicked="OnPerformanceClicked"/>
 
-            <!-- Messages -->
             <Button Text="📩 Messages"
                     BackgroundColor="MediumPurple"
                     TextColor="White"
@@ -46,7 +34,6 @@
                     HeightRequest="50"
                     Clicked="OnMessagesClicked"/>
 
-            <!-- Logout -->
             <Button Text="Logout"
                     BackgroundColor="DarkRed"
                     TextColor="White"

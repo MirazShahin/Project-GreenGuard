@@ -16,6 +16,7 @@ namespace GreenGuard.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             await LoadDashboardData();
         }
 
@@ -36,71 +37,79 @@ namespace GreenGuard.Views
                 }
 
                 TotalSoldLabel.Text = data.TotalTreesSold.ToString();
-                TopTreeLabel.Text = data.TopTreeName;
+
+                TopTreeLabel.Text = string.IsNullOrWhiteSpace(data.TopTreeName)
+                    ? "None"
+                    : data.TopTreeName;
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", "Failed to load analytics\n" + ex.Message, "OK");
+                await DisplayAlert("Error", "Failed to load analytics.\n" + ex.Message, "OK");
+
                 TotalSoldLabel.Text = "0";
                 TopTreeLabel.Text = "Error";
             }
         }
 
-
-        // ------ Existing button handlers ------
         private async void OnAddTreeClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AddTreePage());
+            await SafeNavigateAsync(new AddTreePage());
         }
-        private async void OnUpdateTreeClicked(object sender, EventArgs e)
+
+        private async void OnDeleteTreeClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new UpdateTreePage());
+            await Navigation.PushAsync(new DeleteTreePage());
         }
-        private async void OnInventoryClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new InventoryPage());
-        }
-        private async void OnPermissionRequestsClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new PermissionRequestsPage());
-        }
+
         private async void OnNGORequestsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AdminNGORequestsPage());
+            await SafeNavigateAsync(new AdminNGORequestsPage());
         }
-        private async void OnProjectRequestsClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AdminProjectApprovalPage());
-        }
+
+
         private async void OnViewLeadersClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LeaderManagementPage());
+            await SafeNavigateAsync(new LeaderManagementPage());
         }
+
         private async void OnViewVolunteersClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new VolunteerManagementPage());
+            await SafeNavigateAsync(new VolunteerManagementPage());
         }
+
         private async void OnZoneWiseClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ZoneManagementPage());
+            await SafeNavigateAsync(new ZoneManagementPage());
         }
-        private async void OnSalesReportClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SalesSummaryPage());
-        }
-        private async void OnTreeAnalysisClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TreeAnalysisPage());
-        }
+
         private async void OnMessagesClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MessagesPage("Admin"));
+            await SafeNavigateAsync(new MessagesPage("Admin"));
         }
+
         private async void OnLogoutClicked(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert("Logout", "Are you sure you want to logout?", "Yes", "No");
+            bool confirm = await DisplayAlert("Logout",
+                                              "Are you sure you want to logout?",
+                                              "Yes", "No");
+
             if (confirm)
                 await Navigation.PopToRootAsync();
+        }
+
+        private async Task SafeNavigateAsync(Page page)
+        {
+            try
+            {
+                if (Navigation != null)
+                    await Navigation.PushAsync(page);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Navigation Error",
+                                   "Unable to open the page.\n" + ex.Message,
+                                   "OK");
+            }
         }
     }
 }

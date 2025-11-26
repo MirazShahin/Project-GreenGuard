@@ -2,7 +2,7 @@
 {
     public partial class VolunteerDashboard : ContentPage
     {
-        private string assignedLeader = "Leader A"; // 👉 Future: DB থেকে আসবে
+        private string assignedLeader = "Leader A";
 
         public VolunteerDashboard()
         {
@@ -14,24 +14,13 @@
             await Navigation.PushAsync(new PlantationUpdatePage());
         }
 
-        private async void OnTreeRequestClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TreeRequestPage());
-        }
-
         private async void OnRequirementUpdateClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new TreeRequirementUpdatePage());
         }
 
-        private async void OnHistoryClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new VolunteerHistoryPage());
-        }
-
         private async void OnMessageClicked(object sender, EventArgs e)
         {
-            // Volunteer শুধু তার leader কেই মেসেজ পাঠাতে পারবে
             await Navigation.PushAsync(new NewMessagePage("Volunteer", assignedLeader));
         }
 

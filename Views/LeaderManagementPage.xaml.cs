@@ -1,36 +1,42 @@
-﻿using System.Collections.ObjectModel;
+﻿using GreenGuard.Models;
+using GreenGuard.Services;
+using System.Collections.ObjectModel;
 
 namespace GreenGuard.Views
 {
     public partial class LeaderManagementPage : ContentPage
     {
-        private List<Leader> leaders;
+        private readonly ApiService _api;
+        private List<InternalUser> _leaders = new();
 
         public LeaderManagementPage()
         {
             InitializeComponent();
+            _api = new ApiService();
+        }
 
-            // Dummy data (later DB থেকে আসবে)
-            leaders = new List<Leader>
-            {
-                new Leader { Name="Rahim Uddin", LeaderId="L001", Zone="Zone A" },
-                new Leader { Name="Karim Ali", LeaderId="L002", Zone="Zone B" },
-                new Leader { Name="Shila Akter", LeaderId="L003", Zone="Zone C" },
-                new Leader { Name="Babul Mia", LeaderId="L004", Zone="Zone A" }
-            };
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadLeaders();
+        }
 
+        private async Task LoadLeaders()
+        {
+            _leaders = await _api.GetLeaders();
             ApplyFilters();
         }
 
-        // 🔹 Apply search + grouping filter
         private void ApplyFilters()
         {
-            string searchText = LeaderSearchBar.Text?.ToLower() ?? "";
+            string search = LeaderSearchBar.Text?.ToLower() ?? "";
 
-            var filtered = leaders
-                .Where(l => string.IsNullOrEmpty(searchText) ||
-                            l.Name.ToLower().Contains(searchText) ||
-                            l.LeaderId.ToLower().Contains(searchText))
+            var filtered = _leaders
+                .Where(l =>
+                    (l.FullName?.ToLower().Contains(search) ?? false) ||
+                    (l.Email?.ToLower().Contains(search) ?? false) ||
+                    (l.LeaderId?.ToLower().Contains(search) ?? false)
+                )
                 .GroupBy(l => l.Zone)
                 .Select(g => new LeaderGroup(g.Key, g.ToList()))
                 .ToList();
@@ -38,97 +44,92 @@ namespace GreenGuard.Views
             GroupedLeaderCollectionView.ItemsSource = filtered;
         }
 
-        // 🔹 Add Leader
+        // ADD LEADER
         private async void OnAddLeaderClicked(object sender, EventArgs e)
         {
-            string name = await DisplayPromptAsync("Add Leader", "Enter leader name:");
-            if (string.IsNullOrEmpty(name)) return;
+            string name = await DisplayPromptAsync("Add Leader", "Enter full name:");
+            if (string.IsNullOrWhiteSpace(name)) return;
 
-            string id = $"L{leaders.Count + 1:000}";
+            string email = await DisplayPromptAsync("Add Leader", "Enter email:");
+            if (string.IsNullOrWhiteSpace(email)) return;
 
-            // Zones আসবে ZoneManagementPage থেকে
-            var zones = ZoneManagementPage.GetZones();
-            if (!zones.Any())
+            string password = await DisplayPromptAsync("Add Leader", "Enter password:");
+            if (string.IsNullOrWhiteSpace(password)) return;
+
+            string zone = await DisplayPromptAsync("Add Leader", "Enter zone:");
+            if (string.IsNullOrWhiteSpace(zone)) return;
+
+            var leader = new InternalUser
             {
-                await DisplayAlert("Error", "No zones available. Please add zones first in Zone Management.", "OK");
-                return;
+                FullName = name,
+                Email = email,
+                Password = password,
+                Zone = zone,
+                Role = "Leader"
+            };
+
+            bool ok = await _api.AddLeader(leader);
+
+            if (ok)
+            {
+                await LoadLeaders();
+                await DisplayAlert("Success", "Leader added.", "OK");
             }
-
-            string zone = await DisplayActionSheet("Select Zone", "Cancel", null, zones.ToArray());
-            if (zone == "Cancel" || string.IsNullOrEmpty(zone)) return;
-
-            leaders.Add(new Leader { Name = name, LeaderId = id, Zone = zone });
-            ApplyFilters();
         }
 
-        // 🔹 Edit Leader
+        // EDIT
         private async void OnEditClicked(object sender, EventArgs e)
         {
-            if (sender is Button button && button.CommandParameter is Leader leader)
+            if (sender is Button button && button.CommandParameter is InternalUser leader)
             {
-                string newName = await DisplayPromptAsync("Edit Leader", "Update leader name:", initialValue: leader.Name);
-                if (!string.IsNullOrEmpty(newName))
-                {
-                    leader.Name = newName;
-                }
+                string newName = await DisplayPromptAsync("Edit", "Update name:", initialValue: leader.FullName);
+                if (!string.IsNullOrWhiteSpace(newName)) leader.FullName = newName;
 
-                var zones = ZoneManagementPage.GetZones();
-                if (!zones.Any())
-                {
-                    await DisplayAlert("Error", "No zones available to select.", "OK");
-                    return;
-                }
+                string newZone = await DisplayPromptAsync("Edit", "Update zone:", initialValue: leader.Zone);
+                if (!string.IsNullOrWhiteSpace(newZone)) leader.Zone = newZone;
 
-                string newZone = await DisplayActionSheet("Update Zone", "Cancel", null, zones.ToArray());
-                if (newZone != "Cancel" && !string.IsNullOrEmpty(newZone))
+                bool ok = await _api.UpdateLeader(leader);
+                if (ok)
                 {
-                    leader.Zone = newZone;
+                    await LoadLeaders();
+                    await DisplayAlert("Updated", "Leader updated.", "OK");
                 }
-
-                ApplyFilters();
             }
         }
 
-        // 🔹 Remove Leader
+        // DELETE
         private async void OnRemoveClicked(object sender, EventArgs e)
         {
-            if (sender is Button button && button.CommandParameter is Leader leader)
+            if (sender is Button button && button.CommandParameter is InternalUser leader)
             {
-                bool confirm = await DisplayAlert("Confirm", $"Remove leader {leader.Name}?", "Yes", "No");
-                if (confirm)
+                bool confirm = await DisplayAlert("Delete", $"Delete {leader.FullName}?", "Yes", "No");
+                if (!confirm) return;
+
+                bool ok = await _api.DeleteLeader(leader.Id);
+
+                if (ok)
                 {
-                    leaders.Remove(leader);
-                    ApplyFilters();
+                    await LoadLeaders();
+                    await DisplayAlert("Removed", "Leader removed.", "OK");
                 }
             }
         }
 
-        // 🔹 Search bar change
         private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
         {
             ApplyFilters();
         }
 
-        // 🔹 Back button
         private async void OnBackClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }
     }
 
-    // --- Models ---
-    public class Leader
-    {
-        public string Name { get; set; }
-        public string LeaderId { get; set; }
-        public string Zone { get; set; }
-    }
-
-    public class LeaderGroup : ObservableCollection<Leader>
+    public class LeaderGroup : ObservableCollection<InternalUser>
     {
         public string Key { get; }
-
-        public LeaderGroup(string key, IEnumerable<Leader> leaders) : base(leaders)
+        public LeaderGroup(string key, IEnumerable<InternalUser> items) : base(items)
         {
             Key = key;
         }
